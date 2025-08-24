@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Artopix — Contemporary Textile & Fashion</title>
+    <meta name="description"
+        content="Artopix — contemporary textile & fashion. Explore new-in collections, dresses, kimonos, scarves, and accessories." />
+    <style>
+        :root {
+            --white: #ffffff;
+            --off: #f7f7f7;
+            --text: #222;
+            --muted: #666;
+            --accent: #222;
+            /* monochrome aesthetic */
+            --maxw: 1200px;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--off);
+            color: var(--text);
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        img {
+            max-width: 100%;
+            display: block
+        }
+
+        /* Header */
+        .topbar {
+            background: var(--white);
+            padding: 8px 16px;
+            border-bottom: 1px solid #eaeaea
+        }
+
+        .topbar .msg {
+            font-size: 12px;
+            text-align: center;
+            color: var(--muted);
+            letter-spacing: .02em
+        }
+
+        header {
+            background: var(--white);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            border-bottom: 1px solid #eee
+        }
+
+        .nav {
+            max-width: var(--maxw);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            gap: 12px
+        }
+
+        .brand {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: .08em
+        }
+
+        .brand span {
+            padding: 6px 10px;
+            border: 1px solid #ddd;
+            border-radius: 999px;
+            background: var(--off)
+        }
+
+        .menu {
+            display: flex;
+            gap: 22px;
+            align-items: center
+        }
+
+        .menu a {
+            font-size: 15px;
+            color: #333
+        }
+
+        .menu a:hover {
+            opacity: .7
+        }
+
+        .hamb {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer
+        }
+
+        .hamb span {
+            width: 24px;
+            height: 2px;
+            background: #333;
+            display: block
+        }
+
+        @media (max-width:900px) {
+            .menu {
+                display: none;
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 64px;
+                background: var(--white);
+                padding: 16px;
+                border-bottom: 1px solid #eee;
+                flex-direction: column
+            }
+
+            .menu.open {
+                display: flex
+            }
+
+            .hamb {
+                display: flex
+            }
+
+            .brand {
+                font-size: 24px
+            }
+        }
+
+        /* Hero slider */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            background: var(--off)
+        }
+
+        .slides {
+            position: relative;
+            height: 68vh;
+            max-height: 720px;
+            min-height: 420px
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity .8s ease
+        }
+
+        .slide.active {
+            opacity: 1
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        .hero .dots {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 14px;
+            display: flex;
+            gap: 8px
+        }
+
+        .dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #ddd;
+            border: 1px solid #bbb;
+            cursor: pointer
+        }
+
+        .dot.active {
+            background: #333
+        }
+
+        .hero .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, .0), rgba(0, 0, 0, .25));
+            pointer-events: none;
+        }
+
+        .hero .caption {
+            position: absolute;
+            left: 50%;
+            bottom: 40px;
+            transform: translateX(-50%);
+            text-align: center;
+            color: #fff;
+            background: rgba(0, 0, 0, .35);
+            padding: 10px 16px;
+            border-radius: 999px;
+            font-size: 14px;
+            backdrop-filter: saturate(120%) blur(2px);
+        }
+
+        /* Sections */
+        .section {
+            max-width: var(--maxw);
+            margin: 40px auto;
+            padding: 0 16px
+        }
+
+        .headline {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px
+        }
+
+        .headline h2 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: .04em
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px
+        }
+
+        @media (max-width:1000px) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr)
+            }
+        }
+
+        @media (max-width:700px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        @media (max-width:460px) {
+            .grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .card {
+            background: var(--white);
+            border: 1px solid #eee;
+            border-radius: 14px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform .15s ease, box-shadow .15s ease
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, .06)
+        }
+
+        .card img {
+            aspect-ratio: 3/4;
+            object-fit: cover
+        }
+
+        .card .info {
+            padding: 12px 12px 14px
+        }
+
+        .card .title {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0 0 4px
+        }
+
+        .card .price {
+            font-size: 14px;
+            color: var(--muted)
+        }
+
+        /* Banner strip */
+        .banner {
+            background: var(--white);
+            padding: 22px 16px;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee
+        }
+
+        .banner .inner {
+            max-width: var(--maxw);
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            align-items: center;
+            justify-content: center;
+            color: #333
+        }
+
+        .pill {
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: var(--off);
+            font-size: 13px
+        }
+
+        /* Newsletter & footer */
+        .newsletter {
+            background: var(--white);
+            padding: 40px 16px;
+            border-top: 1px solid #eee;
+            text-align: left
+        }
+
+        .newsletter .wrap {
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .newsletter h3 {
+            margin: 0 0 10px
+        }
+
+        .newsletter p {
+            color: var(--muted);
+            margin: 0 0 16px
+        }
+
+        .newsletter form {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap
+        }
+
+        .newsletter input[type=email] {
+            padding: 12px 14px;
+            border: 1px solid #ddd;
+            border-radius: 999px;
+            min-width: 260px
+        }
+
+        .newsletter button {
+            padding: 12px 18px;
+            border-radius: 999px;
+            border: 1px solid #222;
+            background: #222;
+            color: #fff;
+            cursor: pointer
+        }
+
+        .newsletter button:hover {
+            opacity: .9
+        }
+
+        footer {
+            background: var(--white);
+            border-top: 1px solid #eee
+        }
+
+        .foot {
+            max-width: var(--maxw);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 16px;
+            padding: 28px 16px
+        }
+
+        .foot h4 {
+            margin: 0 0 10px
+        }
+
+        .foot a {
+            display: block;
+            color: #333;
+            margin: 6px 0;
+            font-size: 14px
+        }
+
+        @media (max-width:900px) {
+            .foot {
+                grid-template-columns: 1fr 1fr
+            }
+        }
+
+        @media (max-width:520px) {
+            .foot {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .copyright {
+            padding: 12px 16px;
+            border-top: 1px solid #eee;
+            font-size: 13px;
+            color: var(--muted);
+            text-align: center
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topbar">
+        <div class="msg">Free shipping on orders over ₹3,000 • New summer prints just landed</div>
+    </div>
+    <header style="background-color: #f7f7f7;">
+        <nav class="nav">
+            <div class="brand"><img src="images/artopix.png" alt="Artopix Logo" style="height:70px"></div>
+            <div class="hamb" id="hamb" aria-label="Open menu" aria-controls="menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </div>
+            <div class="menu" id="menu">
+                <a href="#new">New In</a>
+                <a href="#collections">Collections</a>
+                <a href="#about">About</a>
+                <a href="#journal">Journal</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero" aria-label="Featured slideshow">
+        <div class="slides" id="slides">
+            <div class="slide active"><img src="images/slide1.jpg" alt="Artopix floral textile design 1" /></div>
+            <div class="slide"><img src="images/slide2.jpg" alt="Artopix floral textile design 2" /></div>
+            <div class="slide"><img src="images/slide3.jpg" alt="Artopix floral textile design 3" /></div>
+            <div class="slide"><img src="images/slide4.jpg" alt="Artopix floral textile design 4" /></div>
+        </div>
+        <div class="overlay" aria-hidden="true"></div>
+        <div class="caption">A contemporary twist on classic florals — discover Artopix.</div>
+        <div class="dots" id="dots" role="tablist" aria-label="Slide controls"></div>
+    </section>
+
+    <section class="banner">
+        <div class="inner">
+            <div class="pill">New Season Arrivals</div>
+            <div class="pill">Hand-drawn prints</div>
+            <div class="pill">Designed in India</div>
+            <div class="pill">Worldwide Shipping</div>
+        </div>
+    </section>
+
+    <section id="new" class="section">
+        <div class="headline">
+            <h2>New In</h2>
+            <a href="#" aria-label="View all new in">View all →</a>
+        </div>
+        <div class="grid">
+            <article class="card">
+                <img src="images/slide1.jpg" alt="Floral Scarf">
+                <div class="info">
+                    <h3 class="title">Floral Scarf</h3>
+                    <div class="price">₹2,499</div>
+                </div>
+            </article>
+            <article class="card">
+                <img src="images/slide2.jpg" alt="Orchid Dress">
+                <div class="info">
+                    <h3 class="title">Orchid Dress</h3>
+                    <div class="price">₹6,990</div>
+                </div>
+            </article>
+            <article class="card">
+                <img src="images/slide3.jpg" alt="Iris Kimono">
+                <div class="info">
+                    <h3 class="title">Iris Kimono</h3>
+                    <div class="price">₹7,990</div>
+                </div>
+            </article>
+            <article class="card">
+                <img src="images/slide4.jpg" alt="Poppy Wrap">
+                <div class="info">
+                    <h3 class="title">Poppy Wrap</h3>
+                    <div class="price">₹3,499</div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section id="collections" class="section">
+        <div class="headline">
+            <h2>Featured Collections</h2>
+            <a href="#" aria-label="View all collections">Shop collections →</a>
+        </div>
+        <div class="grid">
+            <article class="card">
+                <img src="images/slide2.jpg" alt="Orchid Collection">
+                <div class="info">
+                    <h3 class="title">Orchid Collection</h3>
+                    <div class="price">Dresses & Kimonos</div>
+                </div>
+            </article>
+            <article class="card">
+                <img src="images/slide3.jpg" alt="Iris Collection">
+                <div class="info">
+                    <h3 class="title">Iris Collection</h3>
+                    <div class="price">Scarves & Wraps</div>
+                </div>
+            </article>
+            <article class="card">
+                <img src="images/slide1.jpg" alt="Butterfly Garden">
+                <div class="info">
+                    <h3 class="title">Butterfly Garden</h3>
+                    <div class="price">Accessories</div>
+                </div>
+            </article>
+            <article class="card">
+                <img src="images/slide4.jpg" alt="Whispers of Spring">
+                <div class="info">
+                    <h3 class="title">Whispers of Spring</h3>
+                    <div class="price">Limited Edition</div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <div class="headline">
+            <h2>About Artopix</h2>
+        </div>
+        <p style="max-width:800px;line-height:1.7">
+            Artopix creates hand-drawn prints and contemporary silhouettes crafted for today's market demands and
+            tomorrow's trends.
+            Our palette stays calm and elegant — pure whites (#ffffff) and soft ivory tones (#f7f7f7) — allowing the
+            artwork to shine.
+        </p>
+    </section>
+
+    <section class="newsletter" id="contact">
+        <div class="wrap">
+            <h1>Contact Us</h1>
+            <p>If you would like to get in touch, please feel free to contact us using the details provided below.</p>
+            <p><strong>Phone:</strong> +91 9876543210</p>
+            <p><strong>Customer Inquiries:</strong> support@artopix.com</p>
+            <p><strong>Address:</strong> Artopix Pvt Ltd, 123 Creative Street, Kolkata, India</p>
+        </div>
+    </section>
+
+    <!-- <section class="newsletter" id="contact">
+    <div class="wrap">
+      <h3>Join the Artopix List</h3>
+      <p>Be the first to hear about new prints, journal stories, and limited drops.</p>
+      <form onsubmit="event.preventDefault(); alert('Thank you!');">
+        <input type="email" placeholder="Your email address" aria-label="Email address" required/>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </section> -->
+
+
+    <footer style="background-color: #f7f7f7;"">
+    <div class=" foot">
+        <div>
+            <h4>Artopix</h4>
+            <p style="color:#666;max-width:420px">Whimsical botanicals, refined cuts. Designed in India and made with
+                care.</p>
+        </div>
+        <div>
+            <h4>Shop</h4>
+            <a href="#">New In</a>
+            <a href="#">Dresses</a>
+            <a href="#">Kimonos</a>
+            <a href="#">Scarves</a>
+        </div>
+        <div>
+            <h4>About</h4>
+            <a href="#">Our Story</a>
+            <a href="#">Sustainability</a>
+            <a href="#">Journal</a>
+        </div>
+        <div>
+            <h4>Help</h4>
+            <a href="#">Shipping</a>
+            <a href="#">Returns</a>
+            <a href="#">Contact</a>
+        </div>
+        </div>
+        <div class="copyright">© <span id="year"></span> Artopix. All rights reserved.</div>
+    </footer>
+
+    <script>
+        // Mobile menu
+        const hamb = document.getElementById('hamb');
+        const menu = document.getElementById('menu');
+        hamb.addEventListener('click', () => {
+            const open = menu.classList.toggle('open');
+            hamb.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+
+        // Slider
+        const slides = Array.from(document.querySelectorAll('.slide'));
+        const dotsWrap = document.getElementById('dots');
+        let idx = 0, timer = null;
+
+        function renderDots() {
+            dotsWrap.innerHTML = '';
+            slides.forEach((_, i) => {
+                const b = document.createElement('button');
+                b.className = 'dot' + (i === idx ? ' active' : '');
+                b.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+                b.addEventListener('click', () => go(i, true));
+                dotsWrap.appendChild(b);
+            });
+        }
+        function go(i, user = false) {
+            slides[idx].classList.remove('active');
+            idx = (i + slides.length) % slides.length;
+            slides[idx].classList.add('active');
+            renderDots();
+            if (user) { restart() }
+        }
+        function next() { go(idx + 1); }
+        function start() { timer = setInterval(next, 4000); }
+        function stop() { if (timer) { clearInterval(timer); timer = null; } }
+        function restart() { stop(); start(); }
+
+        slides[0].classList.add('active');
+        renderDots(); start();
+        document.querySelector('.hero').addEventListener('mouseenter', stop);
+        document.querySelector('.hero').addEventListener('mouseleave', start);
+
+        // Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+
+</html>
